@@ -21,8 +21,11 @@
  *  0  => true
  *  -5 => false
  */
-function isPositive(/* number */) {
-  throw new Error('Not implemented');
+function isPositive(number) {
+  if (number >= 0) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -38,8 +41,15 @@ function isPositive(/* number */) {
  *  -5, 0, 5      => 5
  *  -0.1, 0, 0.2  => 0.2
  */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  if (a > b && a > c) {
+    return a;
+  }
+  if (b > a && b > c) {
+    return b;
+  }
+
+  return c;
 }
 
 /**
@@ -60,8 +70,16 @@ function getMaxNumber(/* a, b, c */) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (
+    queen.x === king.x ||
+    queen.y === king.y ||
+    Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)
+  ) {
+    return true;
+  }
+
+  return false;
 }
 
 /**
@@ -82,8 +100,15 @@ function canQueenCaptureKing(/* queen, king */) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  return (
+    a > 0 &&
+    b > 0 &&
+    c > 0 &&
+    ((a === b && c <= a + b) ||
+      (b === c && a <= b + c) ||
+      (a === c && b <= a + c))
+  );
 }
 
 /**
@@ -100,8 +125,26 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  let number = num;
+
+  if (number < 1 || number > 39) {
+    throw new Error('');
+  } else {
+    let res = '';
+
+    const romeNumbers = ['X', 'IX', 'V', 'IV', 'I'];
+    const numbers = [10, 9, 5, 4, 1];
+
+    for (let i = 0; i < romeNumbers.length; i += 1) {
+      while (number >= numbers[i]) {
+        res += romeNumbers[i];
+        number -= numbers[i];
+      }
+    }
+
+    return res;
+  }
 }
 
 /**
@@ -119,8 +162,53 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let res = '';
+
+  const numToWord = (num) => {
+    switch (num) {
+      case '0':
+        return 'zero';
+      case '1':
+        return 'one';
+      case '2':
+        return 'two';
+      case '3':
+        return 'three';
+      case '4':
+        return 'four';
+      case '5':
+        return 'five';
+      case '6':
+        return 'six';
+      case '7':
+        return 'seven';
+      case '8':
+        return 'eight';
+      case '9':
+        return 'nine';
+      default:
+        return '';
+    }
+  };
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    if (numberStr[i] === '.' || numberStr[i] === ',') {
+      res += 'point ';
+    } else {
+      res += `${numToWord(numberStr[i])}`;
+
+      if (i < numberStr.length - 1) {
+        res += ' ';
+      }
+    }
+  }
+
+  if (numberStr[0] === '-') {
+    res = `minus${res}`;
+  }
+
+  return res;
 }
 
 /**
@@ -135,8 +223,14 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  const length = Math.floor(str.length / 2);
+  for (let i = 0; i < length; i += 1) {
+    if (str[i] !== str[str.length - i - 1]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 /**
@@ -153,8 +247,13 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 /**
@@ -172,8 +271,17 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  const numStr = `${num}`;
+  const digitStr = `${digit}`;
+
+  for (let i = 0; i < numStr; i += 1) {
+    if (numStr[i] === digitStr) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 /**
@@ -189,8 +297,26 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  if (arr.length === 0) return -1;
+
+  let sum = 0;
+  let curSum = 0;
+
+  for (let i = 0; i < arr.length; i += 1) {
+    sum += arr[i];
+  }
+
+  for (let i = 0; i < arr.length; i += 1) {
+    sum -= arr[i];
+    if (sum === curSum) {
+      return i;
+    }
+
+    curSum += arr[i];
+  }
+
+  return -1;
 }
 
 /**
@@ -253,6 +379,18 @@ function rotateMatrix(/* matrix */) {
  */
 function sortByAsc(/* arr */) {
   throw new Error('Not implemented');
+  // const res = [...arr];
+  // for (let i = 0; i < res.length; i += 1) {
+  //   for (let j = 0; j < res.length - 1; j += 1) {
+  //     if (res[j] > res[j + 1]) {
+  //       const temp = res[j];
+  //       res[j] = res[j + 1];
+  //       res[j + 1] = temp;
+  //     }
+  //   }
+  // }
+
+  // return res;
 }
 
 /**
@@ -272,8 +410,25 @@ function sortByAsc(/* arr */) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let string = str;
+
+  for (let i = 0; i < iterations; i += 1) {
+    let shuffledStr = '';
+    let oddSymbol = '';
+
+    for (let j = 0; j < string.length; j += 1) {
+      if (j % 2 === 0) {
+        shuffledStr += string[j];
+      } else {
+        oddSymbol += string[j];
+      }
+    }
+
+    string = shuffledStr + oddSymbol;
+  }
+
+  return string;
 }
 
 /**
